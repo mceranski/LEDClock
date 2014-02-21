@@ -2,17 +2,9 @@
 #include <Wire.h>
 #include "RTClib.h"
 #include "ht1632.h"
-#include "Cmd.h"
-
-#define SPEAKER_PIN 8  
-#define BAUD    (9600)
-#define MAX_BUF (64)
-#define MODE_CLOCK  0
-#define MODE_COMMAND  1
-#define MODE_MENU 2
-#define BTN_LEFT 7
-#define BTN_MIDDLE 6
-#define BTN_RIGHT 5
+//#include "Cmd.h"
+#include "Menu.h"
+#include "LEDClock.h"
 
 RTC_DS1307 RTC;
 DateTime lastDate;
@@ -23,9 +15,12 @@ byte mode = MODE_CLOCK;
 void setup()
 {  
   //must set the delimiter to carriage return for this to work
-  cmdInit(BAUD);
-  cmdAdd("text", displayText);
+  //cmdInit(BAUD);
+  //cmdAdd("text", displayText);
 
+  Serial.begin(BAUD);
+  
+  menuInit();  
   Wire.begin();   
   RTC.begin();  
   
@@ -63,8 +58,9 @@ void loop ()
   if( mode == MODE_CLOCK ) {
     updateDisplay(); 
   }
-
-  cmdPoll();   
+  
+  menuRead();  
+  //cmdPoll();   
 }
 
 void beep( int times = 1, int delaytime = 100 ){

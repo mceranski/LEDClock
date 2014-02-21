@@ -5,14 +5,13 @@
  */
 #ifndef __ht1632_h
 #define __ht1632_h
-
 #include <Arduino.h>
- 
+#include "LEDClock.h"
+
 /*
   commands written to the chip consist of a 3 bit "ID", followed by
   either 9 bits of "Command code" or 7 bits of address + 4 bits of data.
 */
-
 #define HT1632_ID_CMD 4		/* ID = 100 - Commands */
 #define HT1632_ID_RD  6		/* ID = 110 - Read RAM */
 #define HT1632_ID_WR  5		/* ID = 101 - Write RAM */
@@ -40,13 +39,6 @@
 #define X_MAX 31	// 0 based X
 #define Y_MAX 15	// 0 based Y
 #define CHIP_MAX 4	// Number of HT1632C Chips
-
-// Colors supported by the display
-#define BLACK  0
-#define GREEN  1
-#define RED    2
-#define ORANGE 3
-#define MULTICOLOR 4
 
 class HT1632
 {

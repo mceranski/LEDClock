@@ -5,6 +5,7 @@
 #include <Arduino.h>
 #include "ht1632.h"
 #include "font5x7.h"
+#include "LEDClock.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,10 +15,10 @@
 // -------------------------------------------------------------------------------------------
 HT1632::HT1632()
 {
-  dataPin = 12;
-  clockPin = 9;
-  writeClockPin = 11;
-  chipSelectPin = 10;
+  dataPin = MATRIX_DATA_PIN;
+  clockPin = MATRIX_CLK_PIN;
+  writeClockPin = MATRIX_WR_PIN;
+  chipSelectPin = MATRIX_CS_PIN;
   fontWidth = 5;
 }
 

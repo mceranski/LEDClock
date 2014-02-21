@@ -6,7 +6,6 @@
 
 #define DS1307_ADDRESS 0x68
 #define SECONDS_PER_DAY 86400L
-
 #define SECONDS_FROM_1970_TO_2000 946684800
 
 #if (ARDUINO >= 100)
@@ -14,7 +13,6 @@
 #else
  #include <WProgram.h>
 #endif
-
 
 int i = 0; //The new wire library needs to take an int when you are sending for the zero register
 ////////////////////////////////////////////////////////////////////////////////

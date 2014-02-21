@@ -4,7 +4,6 @@
 #include <avr/pgmspace.h>
 
 #define CHAR_BUFFER 93
-//char* _myfontCharacters  = " :()-_/\\!#$%&*[]{}^|+;',.<=>?@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 const char fontMap[CHAR_BUFFER] PROGMEM  = " :()-_/\\!#$%&*[]{}^|+;',.<=>?@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 unsigned char fontChars[][5]  = 
