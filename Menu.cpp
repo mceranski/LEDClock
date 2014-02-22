@@ -1,39 +1,40 @@
-#include <avr/pgmspace.h>
+  #include <avr/pgmspace.h>
 #include <Arduino.h>
 #include "Menu.h"
 #include "LEDClock.h"
 
-int buttonStates[3] = {0,0,0};
-int lastButtonStates[3] = {0,0,0};
-int buttonPins[3] = { BTN_LEFT_PIN, BTN_MIDDLE_PIN, BTN_RIGHT_PIN };
+// Variables will change:
+int buttonPushCounter = 0;   // counter for the number of button presses
+int buttonState = 1;         // current state of the button
+int lastButtonState = 1; 
 
 void menuInit()
 {
-  for( int i = 0; i < 3; i ++ ) {
-    pinMode( buttonPins[i], INPUT );
-  }
+  pinMode( BTN_MIDDLE_PIN, INPUT );  
 }
 
 void readButton( int index )
 {
   // read the pushbutton input pin:
-  buttonStates[index] = digitalRead(buttonPins[index]);
+  buttonState = digitalRead(BTN_MIDDLE_PIN);
 
   // compare the buttonState to its previous state
-  if (buttonStates[index] != lastButtonStates[index]) {
+  if (buttonState != lastButtonState) {
     // if the state has changed, increment the counter
-    if (buttonStates[index] == HIGH) {
-      Serial.println(index);
-    }
+    if (buttonState == HIGH) {
+      // if the current state is HIGH then the button
+      // wend from off to on:
+      buttonPushCounter++;      
+      Serial.println(buttonPushCounter);
+    } 
   }
   // save the current state as the last state, 
   //for next time through the loop
-  lastButtonStates[index] = buttonStates[index];
+  lastButtonState = buttonState;
+
 }
 
 void menuRead() {
-  for( int i = 0; i < 3; i ++ ) {
-    readButton(i);
-  }
+    readButton(0);
 }
 
