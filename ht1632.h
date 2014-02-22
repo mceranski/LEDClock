@@ -40,6 +40,13 @@
 #define Y_MAX 15	// 0 based Y
 #define CHIP_MAX 4	// Number of HT1632C Chips
 
+/* Colors used by the LED Matrix */
+#define BLACK  0
+#define GREEN  1
+#define RED    2
+#define ORANGE 3
+#define MULTICOLOR 4
+
 class HT1632
 {
   private:
@@ -72,7 +79,6 @@ class HT1632
   public:
       // Two ctors, one with defaults and one with custom pins
     HT1632();
-    HT1632(byte data, byte clk, byte wrclk, byte cs);
 	
     void setup();
     int getPixel(byte x, byte y);

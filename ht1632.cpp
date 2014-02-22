@@ -23,23 +23,6 @@ HT1632::HT1632()
 }
 
 // -------------------------------------------------------------------------------------------
-// Function Mame: HT1632
-// Purpose: Construct object of display with custom pin numbers
-// Parameters:	data	The DATA pin
-//				clk		The CLK pin (clock)
-//				wrclk	The WRITE CLOCK pin
-//				cs		The CS pin (chip-select)
-// -------------------------------------------------------------------------------------------
-HT1632::HT1632(byte data, byte clk, byte wrclk, byte cs)
-{
-  dataPin = data;
-  clockPin = clk;
-  writeClockPin = wrclk;
-  chipSelectPin = cs;	
-  fontWidth = 5;
-}
-
-// -------------------------------------------------------------------------------------------
 // Function Name: outputClockPulse
 // Purpose: enable CLK_74164 pin to output a clock pulse
 // -------------------------------------------------------------------------------------------

@@ -9,7 +9,7 @@
 RTC_DS1307 RTC;
 DateTime lastDate;
 HT1632 ledMatrix;
-
+Menu menu;
 byte mode = MODE_CLOCK;
 
 void setup()
@@ -18,12 +18,10 @@ void setup()
   //cmdInit(BAUD);
   //cmdAdd("text", displayText);
 
-  Serial.begin(BAUD);
-  
-  menuInit();  
+  Serial.begin(BAUD);  
   Wire.begin();   
-  RTC.begin();  
-  
+  RTC.begin();    
+  menu.setup();
   ledMatrix.setup();
   
   if (! RTC.isrunning()) {
@@ -31,7 +29,7 @@ void setup()
     RTC.adjust(DateTime(__DATE__, __TIME__));
   }    
   
-  pinMode( SPEAKER_PIN, OUTPUT );   
+  pinMode( SPEAKER_PIN, OUTPUT );
 }
 
 void displayText(int arg_cnt, char **args)
@@ -59,18 +57,9 @@ void loop ()
     updateDisplay(); 
   }
   
-  menuRead();  
+  menu.checkAll();  
   //cmdPoll();   
 }
-
-void beep( int times = 1, int delaytime = 100 ){
-  for( int i = 0; i < times; i++ ) {
-    analogWrite(5, 20);  // Almost any value can be used except 0 and 255 
-    delay(delaytime);    // wait for a delay
-    analogWrite(5, 0);   // 0 turns it off
-    delay(delaytime);    // wait for a delay   
-  }
-}  
 
 void updateDisplay()
 {  
