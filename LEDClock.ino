@@ -1,35 +1,55 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include "LEDClock.h"
 #include "RTClib.h"
 #include "ht1632.h"
-//#include "Cmd.h"
+#include "Cmd.h"
 #include "Menu.h"
-#include "LEDClock.h"
 
 RTC_DS1307 RTC;
+Menu menu;
 DateTime lastDate;
 HT1632 ledMatrix;
-Menu menu;
 byte mode = MODE_CLOCK;
 
 void setup()
 {  
   //must set the delimiter to carriage return for this to work
-  //cmdInit(BAUD);
-  //cmdAdd("text", displayText);
+  cmdInit(BAUD);
+  cmdAdd("text", displayText);
 
-  Serial.begin(BAUD);  
   Wire.begin();   
   RTC.begin();    
-  menu.setup();
   ledMatrix.setup();
+  
+  menu.setup();
+  menu.setCallback( onButtonPressed ); 
   
   if (! RTC.isrunning()) {
     // following line sets the RTC to the date & time this sketch was compiled
     RTC.adjust(DateTime(__DATE__, __TIME__));
   }    
-  
+
   pinMode( SPEAKER_PIN, OUTPUT );
+}
+
+void onButtonPressed(int index) 
+{     
+  mode = MODE_MENU; 
+  
+  switch( index ) {
+      case 0: { //loop through menu       
+        break;
+      } 
+      case 1: { //up
+        break;
+      }
+      case 2: { //down
+        break;
+      }
+  }
+
+  Serial.println(menu.text);
 }
 
 void displayText(int arg_cnt, char **args)
@@ -54,14 +74,21 @@ void displayText(int arg_cnt, char **args)
 void loop ()
 {   
   if( mode == MODE_CLOCK ) {
-    updateDisplay(); 
+    displayClock(); 
+  }
+  else if( mode == MODE_MENU ) {
+    displayMenu();
   }
   
-  menu.checkAll();  
-  //cmdPoll();   
+  menu.read();
+  cmdPoll();   
 }
 
-void updateDisplay()
+void displayMenu()
+{
+}
+
+void displayClock()
 {  
   if( lastDate.minute() == RTC.now().minute() ) return;  
   lastDate = RTC.now();
