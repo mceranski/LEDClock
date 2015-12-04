@@ -1,13 +1,10 @@
 /* ===========================================================================================
  *	Class to control Sure Electronics Bi-Color (RED/GREEN) 32x16 LED Matrix
  * =========================================================================================== */
-#include <avr/pgmspace.h>
 #include <Arduino.h>
 #include "ht1632.h"
 #include "font5x7.h"
 #include "LEDClock.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 // -------------------------------------------------------------------------------------------
 // Function Mame: HT1632

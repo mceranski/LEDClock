@@ -2,7 +2,6 @@
 #define CMD_H
 
 #define MAX_MSG_SIZE    60
-#include <stdint.h>
 
 // command line structure
 typedef struct _cmd_t

@@ -56,7 +56,7 @@ void displayText(int arg_cnt, char **args)
 {
   if( arg_cnt <= 1 ) return;
   
-  char buffer[128];
+  char buffer[100];
   //clear out the buffer
   memset( buffer, 0, sizeof(buffer) );
   
@@ -88,6 +88,12 @@ void displayMenu()
 {
 }
 
+const char fifteen[] PROGMEM = "The time is now quarter after %s.";
+const char thirty[] PROGMEM = "The time is now %s thirty.";
+const char fortyFive[] PROGMEM = "The time is now %s forty five.";
+const char oClock[] PROGMEM = "The time is now %s o'clock.";
+const char today[] PROGMEM = "Today is %s %s %d %d.";
+
 void displayClock()
 {  
   if( lastDate.minute() == RTC.now().minute() ) return;  
@@ -98,26 +104,26 @@ void displayClock()
   }    
   
   if (lastDate.minute() % 5 == 0) {
-    char buffer[100];        
+    char buffer[75];        
     switch( (int)lastDate.minute() ) {
       case 15: {
-        sprintf( buffer, "The time is now quarter after %s.", lastDate.hourName() );
+        sprintf( buffer, fifteen, lastDate.hourName() );
         break;
       }
       case 30: {
-        sprintf( buffer, "The time is now %s thirty.", lastDate.hourName() );
+        sprintf( buffer, thirty, lastDate.hourName() );
         break;
       }
       case 45: {
-        sprintf( buffer, "The time is now %s forty five.", lastDate.hourName() );
+        sprintf( buffer, fortyFive, lastDate.hourName() );
         break;
       }
       case 0: {
-        sprintf( buffer, "The time is now %s o'clock.", lastDate.hourName() );
+        sprintf( buffer, oClock, lastDate.hourName() );
         break;
       }
       default: {
-        sprintf( buffer, "Today is %s %s %d %d.", lastDate.dayName(), lastDate.monthName(), lastDate.day(), lastDate.year() );
+        sprintf( buffer, today, lastDate.dayName(), lastDate.monthName(), lastDate.day(), lastDate.year() );
         break;
       }      
     }

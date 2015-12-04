@@ -1,7 +1,6 @@
 //Start the letter definition and put it in the FLASH memory
 #ifndef __font5x7_h
 #define __font5x7_h
-#include <avr/pgmspace.h>
 
 #define CHAR_BUFFER 93
 const char fontMap[CHAR_BUFFER] PROGMEM  = " :()-_/\\!#$%&*[]{}^|+;',.<=>?@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

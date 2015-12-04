@@ -1,14 +1,13 @@
 #include "Menu.h" 
 #include "LEDClock.h" 
 #include <Arduino.h>
-#include <avr/pgmspace.h>
 
 const int buttonPin[3]= {BTN_LEFT_PIN, BTN_MIDDLE_PIN, BTN_RIGHT_PIN};
 int buttonState[3] = {0, 0, 0};
 int lastButtonState[3] = {0, 0, 0}; 
 
-prog_char miDemo[] PROGMEM = "DEMO";
-PROGMEM const char *menu_items[] = {   
+const char miDemo[] PROGMEM = "DEMO";
+PROGMEM const char* const menu_items[] = {   
   miDemo 
 };
 

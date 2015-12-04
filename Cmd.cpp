@@ -1,10 +1,4 @@
-#include <avr/pgmspace.h>
-#if ARDUINO >= 100
 #include <Arduino.h>
-#else
-#include <WProgram.h>
-#endif
-#include "HardwareSerial.h"
 #include "Cmd.h"
 
 // command line message buffer and pointer
@@ -100,7 +94,7 @@ void cmd_handler()
         // terminate the msg and reset the msg ptr. then send
         // it to the handler for processing.
         *msg_ptr = '\0';
-        Serial.print("\r\n");
+        Serial.print(F("\r\n"));
         cmd_parse((char *)msg);
         msg_ptr = msg;
         break;
