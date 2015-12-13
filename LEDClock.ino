@@ -3,7 +3,6 @@
 #include "LEDClock.h"
 #include "RTClib.h"
 #include "ht1632.h"
-#include "Cmd.h"
 #include "Menu.h"
 
 RTC_DS1307 RTC;
@@ -13,11 +12,7 @@ HT1632 ledMatrix;
 byte mode = MODE_CLOCK;
 
 void setup()
-{  
-  //must set the delimiter to carriage return for this to work
-  cmdInit(BAUD);
-  cmdAdd("text", displayText);
-
+{    
   Wire.begin();   
   RTC.begin();    
   ledMatrix.setup();
@@ -80,8 +75,7 @@ void loop ()
     displayMenu();
   }
   
-  menu.read();
-  cmdPoll();   
+  menu.read(); 
 }
 
 void displayMenu()
@@ -107,23 +101,23 @@ void displayClock()
     char buffer[75];        
     switch( (int)lastDate.minute() ) {
       case 15: {
-        sprintf( buffer, fifteen, lastDate.hourName() );
+        sprintf_P( buffer, fifteen, lastDate.hourName() );
         break;
       }
       case 30: {
-        sprintf( buffer, thirty, lastDate.hourName() );
+        sprintf_P( buffer, thirty, lastDate.hourName() );
         break;
       }
       case 45: {
-        sprintf( buffer, fortyFive, lastDate.hourName() );
+        sprintf_P( buffer, fortyFive, lastDate.hourName() );
         break;
       }
       case 0: {
-        sprintf( buffer, oClock, lastDate.hourName() );
+        sprintf_P( buffer, oClock, lastDate.hourName() );
         break;
       }
       default: {
-        sprintf( buffer, today, lastDate.dayName(), lastDate.monthName(), lastDate.day(), lastDate.year() );
+        sprintf_P( buffer, today, lastDate.dayName(), lastDate.monthName(), lastDate.day(), lastDate.year() );
         break;
       }      
     }
