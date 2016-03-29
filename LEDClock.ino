@@ -29,22 +29,41 @@ void setup()
 }
 
 void onButtonPressed(int index) 
-{     
-  mode = MODE_MENU; 
+{      
+  ledMatrix.clear();  
   
   switch( index ) {
-      case 0: { //loop through menu       
+      case 0: { //toggle mode
+        mode = (mode == MODE_MENU ? MODE_CLOCK : MODE_MENU);
+        ledMatrix.print( menu.text, RED, 1, 0 );  
         break;
       } 
-      case 1: { //up
+      case 1: { //up        
+        DateTime future (RTC.now().unixtime() + 60); //move clock forward 1 minute
+        RTC.adjust(future);    
+        updateClock(future);               
         break;
       }
-      case 2: { //down
+      case 2: { //down        
+        DateTime past (RTC.now().unixtime() - 60); //move clock backward 1 minute
+        RTC.adjust(past);    
+        updateClock(past);
         break;
       }
   }
+}
 
-  Serial.println(menu.text);
+void updateClock( DateTime value )
+{  
+  lastDate = value;
+  ledMatrix.clear();
+  char buffer[15];
+  sprintf(buffer, "%.3s", value.monthName());
+  ledMatrix.print( buffer, RED, 1, 0 );
+  sprintf(buffer, "%02d", value.day());
+  ledMatrix.print( buffer, ORANGE, 19, 0 );
+  sprintf(buffer, "%2d:%02d", value.twelveHourFormat(), value.minute());
+  ledMatrix.print( buffer, GREEN, 1, 8 );  
 }
 
 void displayText(int arg_cnt, char **args)
@@ -68,18 +87,10 @@ void displayText(int arg_cnt, char **args)
 
 void loop ()
 {   
-  if( mode == MODE_CLOCK ) {
+  if( mode == MODE_CLOCK )
     displayClock(); 
-  }
-  else if( mode == MODE_MENU ) {
-    displayMenu();
-  }
   
   menu.read(); 
-}
-
-void displayMenu()
-{
 }
 
 const char fifteen[] PROGMEM = "The time is now quarter after %s.";
@@ -124,13 +135,6 @@ void displayClock()
     ledMatrix.clear();
     ledMatrix.scrollText( buffer, ORANGE );
   }    
-    
-  ledMatrix.clear();
-  char buffer[15];
-  sprintf(buffer, "%.3s", lastDate.monthName());
-  ledMatrix.print( buffer, RED, 1, 0 );
-  sprintf(buffer, "%02d", lastDate.day());
-  ledMatrix.print( buffer, ORANGE, 19, 0 );
-  sprintf(buffer, "%2d:%02d", lastDate.twelveHourFormat(), lastDate.minute());
-  ledMatrix.print( buffer, GREEN, 1, 8 ); 
+
+  updateClock( lastDate );
 }
